@@ -1,12 +1,13 @@
 {
   "name": "pi-jjcommit",
   "version": "0.1.0",
-  "description": "jj commit message generator command for Pi.",
+  "description": "jj and git logical commit workflow commands for Pi.",
   "type": "module",
   "keywords": [
     "pi-package",
     "pi",
     "jj",
+    "git",
     "commit"
   ],
   "license": "GPL-3.0-only",
@@ -25,8 +26,6 @@
     ]
   },
   "peerDependencies": {
-    "@mariozechner/pi-ai": "*",
-    "@mariozechner/pi-coding-agent": "*",
-    "@mariozechner/pi-tui": "*"
+    "@mariozechner/pi-coding-agent": "*"
   }
 }

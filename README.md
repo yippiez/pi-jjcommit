@@ -1,11 +1,20 @@
 # pi-jjcommit
 
-`pi-jjcommit` is a Pi package that adds `/jj-commit`.
+`pi-jjcommit` is a Pi package that adds lightweight commit workflow commands:
 
-- `/jj-commit` generates a commit message from current `jj` changes and commits.
-- `/jj-commit provider/model` uses a specific model for that run.
+- `/jj-commit` asks the current agent to commit the current changes with `jj` in logical chunks.
+- `/git-commit` asks the current agent to commit the current changes with `git` in logical chunks.
 
-## Install from Git
+These commands do not generate or run commits themselves. They simply send a detailed workflow prompt to the current Pi agent, including example command snippets.
+
+You can add extra instructions after either command:
+
+```text
+/jj-commit only commit the docs changes
+/git-commit split tests and implementation into separate commits
+```
+
+## Install both commands from Git
 
 Global install (writes to `~/.pi/agent/settings.json`):
 
@@ -19,12 +28,10 @@ Local/project install (writes to `.pi/settings.json` in the current repo):
 pi install -l git:github.com/yippiez/pi-jjcommit
 ```
 
-## Change default model
+The package manifest loads the whole `extensions/` directory, so both extension files are installed together:
 
-To change the fallback model used by `/jj-commit`, edit these constants in `extensions/jj-commit.ts`:
-
-- `DEFAULT_MODEL_PROVIDER`
-- `DEFAULT_MODEL_ID`
+- `extensions/jj-commit.ts` → `/jj-commit`
+- `extensions/git-commit.ts` → `/git-commit`
 
 ## Optional: Pin to a ref
 

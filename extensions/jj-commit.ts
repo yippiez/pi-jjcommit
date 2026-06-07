@@ -1,4 +1,4 @@
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 const JJ_COMMIT_PROMPT = `Commit the current repository changes using jj in logical chunks.
 

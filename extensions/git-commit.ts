@@ -1,6 +1,6 @@
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 
-const JJ_COMMIT_PROMPT = `Commit the current repository changes using jj in logical chunks.
+const GIT_COMMIT_PROMPT = `Commit the current repository changes using git in logical chunks.
 
 Workflow:
 1. Inspect the current changes before committing.
@@ -10,46 +10,49 @@ Workflow:
 5. If something is ambiguous or unsafe to commit, ask me before proceeding.
 6. After committing, show a short summary of what was committed.
 
-Useful jj command snippets:
+Useful git command snippets:
 
 \`\`\`bash
-jj status
-jj diff --stat
-jj diff
+git status --short
+git diff --stat
+git diff
 \`\`\`
 
-Commit all current working-copy changes:
+Stage and commit one logical chunk by path:
 
 \`\`\`bash
-jj commit -m "feat: add useful thing"
+git add src/file-a.ts src/file-b.ts
+git commit -m "refactor: simplify file handling"
 \`\`\`
 
-Commit only selected paths as one logical chunk:
+Interactively stage part of the current changes:
 
 \`\`\`bash
-jj commit src/file-a.ts src/file-b.ts -m "refactor: simplify file handling"
+git add -p
+git commit -m "fix: handle empty input"
 \`\`\`
 
-Interactively select part of the current changes:
+Check remaining changes before the next chunk:
 
 \`\`\`bash
-jj commit -i -m "fix: handle empty input"
+git status --short
+git diff --stat
 \`\`\`
 
 Please perform the workflow now.`;
 
 export default function (pi: ExtensionAPI) {
-  pi.registerCommand("jj-commit", {
-    description: "Ask the agent to commit current changes with jj in logical chunks",
+  pi.registerCommand("git-commit", {
+    description: "Ask the agent to commit current changes with git in logical chunks",
     handler: async (args, ctx) => {
       const note = args.trim() ? `\n\nAdditional user instruction:\n${args.trim()}` : "";
-      const prompt = JJ_COMMIT_PROMPT + note;
+      const prompt = GIT_COMMIT_PROMPT + note;
 
       if (ctx.isIdle()) {
         pi.sendUserMessage(prompt);
       } else {
         pi.sendUserMessage(prompt, { deliverAs: "followUp" });
-        ctx.ui.notify("Queued jj commit workflow prompt", "info");
+        ctx.ui.notify("Queued git commit workflow prompt", "info");
       }
     },
   });

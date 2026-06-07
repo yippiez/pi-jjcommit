@@ -1,20 +1,18 @@
 # pi-jjcommit
 
-`pi-jjcommit` is a Pi package that adds lightweight commit workflow commands:
+`pi-jjcommit` is a Pi package that adds a lightweight jj commit workflow command:
 
 - `/jj-commit` asks the current agent to commit the current changes with `jj` in logical chunks.
-- `/git-commit` asks the current agent to commit the current changes with `git` in logical chunks.
 
-These commands do not generate or run commits themselves. They simply send a detailed workflow prompt to the current Pi agent, including example command snippets.
+This command does not generate or run commits by itself. It sends a detailed workflow prompt to the current Pi agent, including example command snippets.
 
-You can add extra instructions after either command:
+You can add extra instructions after the command:
 
 ```text
 /jj-commit only commit the docs changes
-/git-commit split tests and implementation into separate commits
 ```
 
-## Install both commands from Git
+## Install from Git
 
 Global install (writes to `~/.pi/agent/settings.json`):
 
@@ -28,10 +26,9 @@ Local/project install (writes to `.pi/settings.json` in the current repo):
 pi install -l git:github.com/yippiez/pi-jjcommit
 ```
 
-The package manifest loads the whole `extensions/` directory, so both extension files are installed together:
+The package manifest loads the whole `extensions/` directory:
 
 - `extensions/jj-commit.ts` → `/jj-commit`
-- `extensions/git-commit.ts` → `/git-commit`
 
 ## Optional: Pin to a ref
 
